@@ -19,6 +19,6 @@ public class Localization {
     String cityName;
     String region;
     String country;
-    float geoLength;
-    float geoWidth;
+    float longitude;
+    float latitude;
 }
