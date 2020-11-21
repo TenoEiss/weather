@@ -9,7 +9,7 @@ import java.util.Optional;
 @Builder
 public class LocalizationDefinition {
     private String cityName;
-    private Optional<String> region;
+    private String region;
     private String country;
     private float longitude;
     private float latitude;

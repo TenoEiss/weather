@@ -10,7 +10,7 @@ import java.util.Optional;
 public class LocalizationDto {
     Long id;
     String cityName;
-    Optional<String> region;
+    String region;
     String country;
     float longitude;
     float latitude;

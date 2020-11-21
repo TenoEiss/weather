@@ -25,7 +25,7 @@ public class LocalizationCreateService {
         } else {
             Localization localization = new Localization();
             localization.setCityName(cityName);
-            localization.setRegion(localizationDefinition.getRegion().toString());
+            localization.setRegion(localizationDefinition.getRegion());
             localization.setCountry(country);
             localization.setLongitude(longitude);
             localization.setLatitude(latitude);

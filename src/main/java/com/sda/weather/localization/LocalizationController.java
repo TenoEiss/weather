@@ -23,13 +23,13 @@ public class LocalizationController {
         Localization localization = locFetchService.fetchLocalization(id);
         return entryMapper.mapToLocalizationDto(localization);
     }
-
-    //    Mam 100 pytań:
+//    Mam 100 pytań:
 //    1. Czemu @ResponseBody jest "not applicable to parameter" -> usunąłem bo był error
 //    2. W Post mappingu wykorzystuję LocaDefinition, ale podaję LocaDto, jak to powinno faktycznie wyglądać?
 //    Proszę o 1 minutę wyjaśnienia co ma się zamienić w co. ResponseEntity to dla mnie jeszcze zagadka.
+//    Na chwilę obecną nie jestem zabezpieczony i mogę dostać nullpointer jak ktoś nie poda regionu. Jak to zrobić dobrze?
     @PostMapping("/loc")
-    ResponseEntity<LocalizationDto> postLocalization(LocalizationDto localizationDto){
+    ResponseEntity<LocalizationDto> postLocalization(LocalizationDto localizationDto) {
         Localization localization = localizationCreateService.createLocalization(LocalizationDefinition
                 .builder()
                 .cityName(localizationDto.getCityName())
