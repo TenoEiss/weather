@@ -10,10 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RequiredArgsConstructor
 public class LocalizationController {
+
     final LocalizationFetchService locFetchService;
     final LocalizationMapper entryMapper;
 
-    @GetMapping("/getloc/{id}")
+    @GetMapping("/loc/{id}")
     LocalizationDto getLocalization(@PathVariable Long id) {
         Localization localization = locFetchService.fetchLocalization(id);
         return entryMapper.mapToLocalizationDto(localization);

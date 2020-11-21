@@ -10,7 +10,6 @@ public class LocalizationFetchService {
 
     private final LocalizationRepository localizationRepository;
 
-
     public Localization fetchLocalization(Long id) {
         return localizationRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("no such localization found" + id));
