@@ -10,11 +10,11 @@ public class LocalizationCreateService {
 
     final LocalizationRepository localizationRepository;
 
-    Localization createLocalization(LocalisationDefinition localisationDefinition) throws Exception {
-        float latitude = localisationDefinition.getLatitude();
-        float longitude = localisationDefinition.getLongitude();
-        String country = localisationDefinition.getCountry();
-        String cityName = localisationDefinition.getCityName();
+    Localization createLocalization(LocalizationDefinition localizationDefinition){
+        float latitude = localizationDefinition.getLatitude();
+        float longitude = localizationDefinition.getLongitude();
+        String country = localizationDefinition.getCountry();
+        String cityName = localizationDefinition.getCityName();
         if (cityName.isBlank() ||
                 country.isBlank() ||
                 longitude > 180 ||
@@ -25,11 +25,11 @@ public class LocalizationCreateService {
         } else {
             Localization localization = new Localization();
             localization.setCityName(cityName);
-            localization.setRegion(localisationDefinition.getRegion().toString());
+            localization.setRegion(localizationDefinition.getRegion().toString());
             localization.setCountry(country);
             localization.setLongitude(longitude);
             localization.setLatitude(latitude);
-            return localization;
+            return localizationRepository.save(localization);
         }
     }
 }

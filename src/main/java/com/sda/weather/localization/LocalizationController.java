@@ -4,7 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Slf4j
@@ -21,15 +24,20 @@ public class LocalizationController {
         return entryMapper.mapToLocalizationDto(localization);
     }
 
-//    Mam 100 pytań:
-//    1. Czemu @ResponseBody jest not applicable to parameter
+    //    Mam 100 pytań:
+//    1. Czemu @ResponseBody jest "not applicable to parameter" -> usunąłem bo był error
 //    2. W Post mappingu wykorzystuję LocaDefinition, ale podaję LocaDto, jak to powinno faktycznie wyglądać?
-//    3. Skoro muszę zamienić Localization na LocalizationDto by użytkownik nie miał dostępu do Localization,
-//       to czemu localization cały czas przewija mi się w tej metodzie?
-//    Proszę o 2 minuty wyjaśnienia co ma się zamienić w co. ResponseEntity to dla mnie jeszcze zagadka.
+//    Proszę o 1 minutę wyjaśnienia co ma się zamienić w co. ResponseEntity to dla mnie jeszcze zagadka.
     @PostMapping("/loc")
-    ResponseEntity<LocalizationDto> postLocalization(@ResponseBody LocalizationDto localizationDto) throws Exception {
-        Localization localization = localizationCreateService.createLocalization(LocalisationDefinition.builder().build());
+    ResponseEntity<LocalizationDto> postLocalization(LocalizationDto localizationDto){
+        Localization localization = localizationCreateService.createLocalization(LocalizationDefinition
+                .builder()
+                .cityName(localizationDto.getCityName())
+                .region(localizationDto.getRegion())
+                .country(localizationDto.getCountry())
+                .longitude(localizationDto.getLongitude())
+                .latitude(localizationDto.getLatitude())
+                .build());
         log.info(String.valueOf(localization));
         return ResponseEntity
                 .status(HttpStatus.CREATED)

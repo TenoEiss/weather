@@ -7,7 +7,7 @@ import java.util.Optional;
 
 @Getter
 @Builder
-public class LocalisationDefinition {
+public class LocalizationDefinition {
     private String cityName;
     private Optional<String> region;
     private String country;
