@@ -6,14 +6,29 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedList;
+import java.util.List;
+
 @RestController
 @Slf4j
 @RequiredArgsConstructor
 public class LocalizationController {
 
+    final LocalizationFetchAllService localizationFetchAllService;
     final LocalizationFetchService locFetchService;
     final LocalizationCreateService localizationCreateService;
     final LocalizationMapper localizationMapper;
+
+    @GetMapping("/loc")
+    List<LocalizationDto> getAllLocalizations() {
+        List<LocalizationDto> localizationDtoList = new LinkedList<>();
+        List<Localization> localizationList = localizationFetchAllService.fetchAllLocalizations();
+        for (Localization localization : localizationList
+        ) {
+            localizationDtoList.add(localizationMapper.mapToLocalizationDto(localization));
+        }
+        return localizationDtoList;
+    }
 
     @GetMapping("/loc/{id}")
     LocalizationDto getLocalization(@PathVariable Long id) {
@@ -21,26 +36,16 @@ public class LocalizationController {
         return localizationMapper.mapToLocalizationDto(localization);
     }
 
-//    Mam 1 pytanie:
-//    2. W Post mappingu wykorzystuję LocaDefinition, ale podaję LocaDto, jak to powinno faktycznie wyglądać?
-//    Proszę o 1 minutę wyjaśnienia co ma się zamienić w co. ResponseEntity to dla mnie jeszcze zagadka.
-//    Na chwilę obecną nie jestem zabezpieczony i mogę dostać nullpointer jak ktoś nie poda regionu. Jak to zrobić dobrze?
     @PostMapping("/loc")
-    ResponseEntity<LocalizationDto> postLocalization(@RequestBody LocalizationDto localizationDto) {
-        LocalizationDefinition localizationDefinition = LocalizationDefinition // todo move to the mapper
-                .builder()
-                .cityName(localizationDto.getCityName())
-                .region(localizationDto.getRegion())
-                .country(localizationDto.getCountry())
-                .longitude(localizationDto.getLongitude())
-                .latitude(localizationDto.getLatitude())
-                .build();
+    ResponseEntity<LocalizationDefinition> postLocalization(@RequestBody LocalizationDto localizationDto) {
 
-        Localization localization = localizationCreateService.createLocalization(localizationDefinition);
-        log.info(String.valueOf(localization)); // todo add more details
+        Localization localization = localizationCreateService
+                .createLocalization(localizationMapper.mapToLocalizationDefinition(localizationDto));
+        log.info(localization + "some extra info" +
+                " that is so necessary to understand how good the situation is");
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(localizationMapper.mapToLocalizationDto(localization));
+                .body(localizationMapper.mapToLocalizationDefinition(localizationDto));
     }
 }

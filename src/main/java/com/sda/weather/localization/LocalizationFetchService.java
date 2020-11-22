@@ -1,6 +1,6 @@
 package com.sda.weather.localization;
 
-import com.sda.weather.NotFoundException;
+import com.sda.weather.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

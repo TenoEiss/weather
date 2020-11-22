@@ -9,7 +9,7 @@ class LocalizationMapper {
         LocalizationDto localizationDto = new LocalizationDto();
         localizationDto.setId(localization.getId());
         localizationDto.setCityName(localization.getCityName());
-        localizationDto.setRegion(localization.getRegion());
+        localizationDto.setRegion(localization.getRegion().toString());
         localizationDto.setCountry(localization.getCountry());
         localizationDto.setLongitude(localization.getLongitude());
         localizationDto.setLatitude(localization.getLatitude());
@@ -17,7 +17,12 @@ class LocalizationMapper {
     }
 
     LocalizationDefinition mapToLocalizationDefinition(LocalizationDto localizationDto) {
-        // todo develop this method
-        return null;
+        return LocalizationDefinition.builder()
+                .cityName(localizationDto.getCityName())
+                .region(localizationDto.getRegion())
+                .country(localizationDto.getCountry())
+                .longitude(localizationDto.getLongitude())
+                .latitude(localizationDto.getLatitude())
+                .build();
     }
 }

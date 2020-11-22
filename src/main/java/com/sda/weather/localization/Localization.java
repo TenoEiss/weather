@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Optional;
 
 @Data
 @RequiredArgsConstructor
@@ -15,10 +16,15 @@ public class Localization {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    String cityName;
-    String region; // todo override the getter -> Optional<String>
-    String country;
-    float longitude;
-    float latitude;
+    private Long id;
+    private String cityName;
+    private String region;
+    private String country;
+    private float longitude;
+    private float latitude;
+
+
+    public Optional<String> getRegion(){
+        return Optional.ofNullable(this.region);
+    }
 }

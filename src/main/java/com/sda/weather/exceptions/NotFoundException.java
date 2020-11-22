@@ -1,4 +1,4 @@
-package com.sda.weather;
+package com.sda.weather.exceptions;
 
 public class NotFoundException extends RuntimeException {
 

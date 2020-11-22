@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -27,9 +28,8 @@ class LocalizationFetchIntegrationTest {
     LocalizationRepository localizationRepository;
     ObjectMapper objectMapper = new ObjectMapper();
 
-//    So far tylko success integration test, todo shtf test i cała reszta
     @Test
-    void createNewLocalization_saveLocalizationInRepositoryAndReturn200HttpStatusCode() throws Exception {
+    void createNewLocalization_saveLocalizationInRepositoryAndReturn201HttpStatusCode() throws Exception {
         // given
         localizationRepository.deleteAll();
         LocalizationDto localizationDto = new LocalizationDto(null, "Gdansk", "Pomerania", "Poland", 180f, 90f);
@@ -48,7 +48,7 @@ class LocalizationFetchIntegrationTest {
         assertThat(entries.size()).isEqualTo(1);
         assertThat(entries.get(0)).satisfies(localization -> {
             assertThat(localization.getCityName()).isEqualTo("Gdansk");
-            assertThat(localization.getRegion()).isEqualTo("Pomerania");
+            assertThat(localization.getRegion()).isEqualTo(Optional.of("Pomerania"));
             assertThat(localization.getCountry()).isEqualTo("Poland");
             assertThat(localization.getLongitude()).isBetween(-180f, 180f);
             assertThat(localization.getLatitude()).isBetween(-90f, 90f);
@@ -56,7 +56,7 @@ class LocalizationFetchIntegrationTest {
     }
 
     @Test
-    void createNewLocalization_whenRegionIsBlank_saveLocalizationInRepositoryAndReturn200HttpStatusCode() throws Exception {
+    void createNewLocalization_whenRegionIsBlank_saveLocalizationInRepositoryAndReturn201HttpStatusCode() throws Exception {
         // given
         localizationRepository.deleteAll();
         LocalizationDto localizationDto = new LocalizationDto(null, "Gdansk", "  ", "Poland", 180f, 90f);
@@ -75,7 +75,7 @@ class LocalizationFetchIntegrationTest {
         assertThat(entries.size()).isEqualTo(1);
         assertThat(entries.get(0)).satisfies(localization -> {
             assertThat(localization.getCityName()).isEqualTo("Gdansk");
-            assertThat(localization.getRegion()).isNull();
+            assertThat(localization.getRegion()).isEmpty();
             assertThat(localization.getCountry()).isEqualTo("Poland");
             assertThat(localization.getLongitude()).isBetween(-180f, 180f);
             assertThat(localization.getLatitude()).isBetween(-90f, 90f);

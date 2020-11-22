@@ -1,4 +1,4 @@
-package com.sda.weather;
+package com.sda.weather.exceptions;
 
 import lombok.extern.slf4j.Slf4j;
 

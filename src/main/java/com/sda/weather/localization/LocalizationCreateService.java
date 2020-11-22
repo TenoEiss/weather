@@ -1,6 +1,6 @@
 package com.sda.weather.localization;
 
-import com.sda.weather.BadRequestException;
+import com.sda.weather.exceptions.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,10 +18,13 @@ public class LocalizationCreateService {
         if (cityName.isBlank() || country.isBlank() || longitude > 180 || longitude < -180 || latitude > 90 || latitude < -90) {
             throw new BadRequestException("Data provided in the creation query is incorrect");
         }
-
         Localization localization = new Localization();
+        if (localizationDefinition.getRegion().isBlank()) {
+            localization.setRegion(null);
+        } else {
+            localization.setRegion(localizationDefinition.getRegion());
+        }
         localization.setCityName(cityName);
-        localization.setRegion(localizationDefinition.getRegion());
         localization.setCountry(country);
         localization.setLongitude(longitude);
         localization.setLatitude(latitude);

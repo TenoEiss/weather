@@ -1,4 +1,4 @@
-package com.sda.weather;
+package com.sda.weather.exceptions;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -16,5 +16,7 @@ public class ExceptionHandlerController {
         log.error(exception.getMessage());
     }
 
-    // todo handle other exceptions
+    @ExceptionHandler(BadRequestException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    void badRequestExceptionHandler(BadRequestException exception){log.error(exception.getMessage());}
 }
