@@ -9,7 +9,7 @@ class LocalizationMapper {
         LocalizationDto localizationDto = new LocalizationDto();
         localizationDto.setId(localization.getId());
         localizationDto.setCityName(localization.getCityName());
-        localizationDto.setRegion(localization.getRegion().toString());
+        localizationDto.setRegion(localization.getRegion().orElse(null));
         localizationDto.setCountry(localization.getCountry());
         localizationDto.setLongitude(localization.getLongitude());
         localizationDto.setLatitude(localization.getLatitude());
