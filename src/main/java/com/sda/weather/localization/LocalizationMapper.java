@@ -15,4 +15,9 @@ class LocalizationMapper {
         localizationDto.setLatitude(localization.getLatitude());
         return localizationDto;
     }
+
+    LocalizationDefinition mapToLocalizationDefinition(LocalizationDto localizationDto) {
+        // todo develop this method
+        return null;
+    }
 }

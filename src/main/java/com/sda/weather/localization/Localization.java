@@ -17,7 +17,7 @@ public class Localization {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String cityName;
-    String region;
+    String region; // todo override the getter -> Optional<String>
     String country;
     float longitude;
     float latitude;

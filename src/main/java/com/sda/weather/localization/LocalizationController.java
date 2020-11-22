@@ -20,21 +20,25 @@ public class LocalizationController {
         Localization localization = locFetchService.fetchLocalization(id);
         return localizationMapper.mapToLocalizationDto(localization);
     }
+
 //    Mam 1 pytanie:
 //    2. W Post mappingu wykorzystuję LocaDefinition, ale podaję LocaDto, jak to powinno faktycznie wyglądać?
 //    Proszę o 1 minutę wyjaśnienia co ma się zamienić w co. ResponseEntity to dla mnie jeszcze zagadka.
 //    Na chwilę obecną nie jestem zabezpieczony i mogę dostać nullpointer jak ktoś nie poda regionu. Jak to zrobić dobrze?
     @PostMapping("/loc")
     ResponseEntity<LocalizationDto> postLocalization(@RequestBody LocalizationDto localizationDto) {
-        Localization localization = localizationCreateService.createLocalization(LocalizationDefinition
+        LocalizationDefinition localizationDefinition = LocalizationDefinition // todo move to the mapper
                 .builder()
                 .cityName(localizationDto.getCityName())
                 .region(localizationDto.getRegion())
                 .country(localizationDto.getCountry())
                 .longitude(localizationDto.getLongitude())
                 .latitude(localizationDto.getLatitude())
-                .build());
-        log.info(String.valueOf(localization));
+                .build();
+
+        Localization localization = localizationCreateService.createLocalization(localizationDefinition);
+        log.info(String.valueOf(localization)); // todo add more details
+
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(localizationMapper.mapToLocalizationDto(localization));

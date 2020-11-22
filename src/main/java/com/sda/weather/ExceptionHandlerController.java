@@ -15,4 +15,6 @@ public class ExceptionHandlerController {
     void notFoundExceptionHandler(NotFoundException exception) {
         log.error(exception.getMessage());
     }
+
+    // todo handle other exceptions
 }
