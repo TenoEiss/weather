@@ -1,12 +1,11 @@
 package com.sda.weather.localization;
 
-import lombok.Builder;
-import lombok.Getter;
-
-import java.util.Optional;
+import lombok.*;
 
 @Getter
 @Builder
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class LocalizationDefinition {
     private String cityName;
     private String region;

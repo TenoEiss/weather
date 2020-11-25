@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -15,23 +16,23 @@ import static org.mockito.Mockito.when;
 class LocalizationCreateServiceTest {
 
     @Mock
+    Localization localization;
+    @Mock
     LocalizationRepository localizationRepository;
-
+    @Mock
+    LocalizationDefinition localizationDefinition;
     @InjectMocks
     LocalizationCreateService localizationCreateService;
 
     @Test
-    void createLocalizationTest_callsRepository() {
+    void createLocalizationTest_callsLocalizationRepository() {
         localizationRepository.deleteAll();
         // given
         when(localizationRepository.save(any(Localization.class))).thenReturn(new Localization());
-        LocalizationDefinition localizationDefinition =
-                new LocalizationDefinition("Gdansk", "Pomerania", "Poland", 69f, 69f);
-
         // when
-        Localization result = localizationCreateService.createLocalization(localizationDefinition);
-
+        localization = localizationCreateService.createLocalization(localizationDefinition);
         // then
-
+        verify(localizationRepository).save(any(Localization.class));
+        assertThat(localization).isInstanceOf(Localization.class);
     }
 }
