@@ -4,14 +4,12 @@ import lombok.*;
 
 @Getter
 @Builder
-@AllArgsConstructor
-@RequiredArgsConstructor
 public class LocalizationDefinition {
-    private String cityName;
-    private String region;
-    private String country;
-    private float longitude;
-    private float latitude;
+    private final String cityName;
+    private final String region;
+    private final String country;
+    private final float longitude;
+    private final float latitude;
 
 
 }

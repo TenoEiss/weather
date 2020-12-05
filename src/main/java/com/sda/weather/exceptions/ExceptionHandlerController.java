@@ -19,4 +19,8 @@ public class ExceptionHandlerController {
     @ExceptionHandler(BadRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     void badRequestExceptionHandler(BadRequestException exception){log.error(exception.getMessage());}
+
+    @ExceptionHandler(InternalServerException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    void internalServerExceptionHandler(InternalServerException exception){log.error(exception.getMessage());}
 }

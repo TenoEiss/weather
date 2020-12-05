@@ -1,5 +1,6 @@
 package com.sda.weather.localization;
 
+import com.sda.weather.exceptions.InternalServerException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -7,20 +8,16 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
 class LocalizationCreateServiceTest {
 
     @Mock
-    Localization localization;
-    @Mock
     LocalizationRepository localizationRepository;
-    @Mock
-    LocalizationDefinition localizationDefinition;
     @InjectMocks
     LocalizationCreateService localizationCreateService;
 
@@ -30,9 +27,34 @@ class LocalizationCreateServiceTest {
         // given
         when(localizationRepository.save(any(Localization.class))).thenReturn(new Localization());
         // when
-        localization = localizationCreateService.createLocalization(localizationDefinition);
+        Localization localization = localizationCreateService
+                .createLocalization
+                        (new LocalizationDefinition("Gdansk", "Pomerania", "Poland", 69, 69));
         // then
         verify(localizationRepository).save(any(Localization.class));
         assertThat(localization).isInstanceOf(Localization.class);
     }
+
+    @Test
+    void createLocalization_whenRegionIsBlank_savesLocalizationInTheRepositoryWithNullValue() {
+        //given
+        when(localizationRepository.save(any(Localization.class))).thenReturn(new Localization());
+        //when
+        Localization localization = localizationCreateService
+                .createLocalization
+                        (new LocalizationDefinition("Gdansk", " ", "Poland", 69, 69));
+        //then
+        assertThat(localization).isInstanceOf(Localization.class);
+        verify(localizationRepository).save(new Localization(null, "Gdansk", null, "Poland", 69, 69));
+    }
+
+    @Test
+    void createLocalization_whenPassedParameterIsNull_throwsInternalServerException() {
+        //when
+        Throwable throwable = catchThrowable(() -> localizationCreateService.createLocalization(null)); //todo fix nevernull problem
+        //then
+        assertThat(throwable).isInstanceOf(InternalServerException.class);
+        verify(localizationRepository, times(0)).save(any(Localization.class));
+    }
+
 }
