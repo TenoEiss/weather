@@ -6,8 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @Slf4j
@@ -21,31 +21,27 @@ public class LocalizationController {
 
     @GetMapping("/loc")
     List<LocalizationDto> getAllLocalizations() {
-        List<LocalizationDto> localizationDtoList = new LinkedList<>();
-        List<Localization> localizationList = localizationFetchAllService.fetchAllLocalizations();
-        for (Localization localization : localizationList
-        ) {
-            localizationDtoList.add(localizationMapper.mapToLocalizationDto(localization));
-        }
-        return localizationDtoList;
+        return localizationFetchAllService.fetchAllLocalizations().stream()
+                .map(localizationMapper::mapToLocalizationDto)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/loc/{id}")
     LocalizationDto getLocalization(@PathVariable Long id) {
-        Localization localization = locFetchService.fetchLocalization(id);
+        Localization localization = locFetchService.fetchLocalization(id); // todo merge with localizationFetchAllService
         return localizationMapper.mapToLocalizationDto(localization);
     }
 
     @PostMapping("/loc")
-    ResponseEntity<LocalizationDefinition> postLocalization(@RequestBody LocalizationDto localizationDto) {
-
+    ResponseEntity<LocalizationDto> postLocalization(@RequestBody LocalizationDto localizationDto) {
         Localization localization = localizationCreateService
                 .createLocalization(localizationMapper.mapToLocalizationDefinition(localizationDto));
+
         log.info(localization + "some extra info" +
                 " that is so necessary to understand how good the situation is");
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(localizationMapper.mapToLocalizationDefinition(localizationDto));
+                .body(localizationMapper.mapToLocalizationDto(localization));
     }
 }

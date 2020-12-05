@@ -47,14 +47,4 @@ class LocalizationCreateServiceTest {
         assertThat(localization).isInstanceOf(Localization.class);
         verify(localizationRepository).save(new Localization(null, "Gdansk", null, "Poland", 69, 69));
     }
-
-    @Test
-    void createLocalization_whenPassedParameterIsNull_throwsInternalServerException() {
-        //when
-        Throwable throwable = catchThrowable(() -> localizationCreateService.createLocalization(null)); //todo fix nevernull problem
-        //then
-        assertThat(throwable).isInstanceOf(InternalServerException.class);
-        verify(localizationRepository, times(0)).save(any(Localization.class));
-    }
-
 }

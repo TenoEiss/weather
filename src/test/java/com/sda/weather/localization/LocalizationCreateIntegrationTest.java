@@ -49,7 +49,7 @@ class LocalizationCreateIntegrationTest {
         assertThat(responseBody.getId()).isNotNull();
         assertThat(responseBody).extracting(LocalizationDto::getCityName, LocalizationDto::getCountry).containsExactly("Gdansk", "Poland");
         assertThat(localizationRepository.findAll()).singleElement().satisfies(localization -> {//todo .singleElement not working wtf is that?
-            assertThat(localization.getId()).isNotNull;
+            assertThat(localization.getId()).isNotNull();
             assertThat(localization.getCityName()).isEqualTo("Gdansk");
             assertThat(localization.getCountry()).isEqualTo("Poland");
             assertThat(localization.getRegion()).hasValue("Pomerania");
@@ -73,8 +73,8 @@ class LocalizationCreateIntegrationTest {
         LocalizationDto responseBody = objectMapper.readValue(response.getContentAsString(StandardCharsets.UTF_8), LocalizationDto.class);
         assertThat(responseBody.getId()).isNotNull();
         assertThat(responseBody).extracting(LocalizationDto::getCityName, LocalizationDto::getCountry).containsExactly("Gdansk", "Poland");
-        assertThat(localizationRepository.findAll()).singleElement.satisfies(localization -> {
-            assertThat(localization.getId()).isNotNull;
+        assertThat(localizationRepository.findAll()).singleElement().satisfies(localization -> {
+            assertThat(localization.getId()).isNotNull();
             assertThat(localization.getCityName()).isEqualTo("Gdansk");
             assertThat(localization.getCountry()).isEqualTo("Poland");
             assertThat(localization.getRegion()).isEmpty();
