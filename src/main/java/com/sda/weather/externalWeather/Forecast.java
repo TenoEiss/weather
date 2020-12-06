@@ -1,5 +1,6 @@
 package com.sda.weather.externalWeather;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 @Entity
 @Data
 @NoArgsConstructor
+@Builder
 public class Forecast {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +21,6 @@ public class Forecast {
     private String temperature;
     private String airPressure;
     private String windDirection;
-    private String windDegree;
     private String windSpeed;
     private String humidity;
 }

@@ -10,11 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class ForecastDto {
-    Long id;
     String temperature;
     String airPressure;
     String windDirection;
-    String windDegree;
     String windSpeed;
     String humidity;
+    String date;
 }
