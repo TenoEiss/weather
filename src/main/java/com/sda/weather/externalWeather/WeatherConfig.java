@@ -9,6 +9,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Setter
 @ToString
 @ConfigurationProperties("com.sda.weather.weather-api")//todo @ConfigurationPropertiesScan czy cos
-public class WeatherConfig {
+public class WeatherConfig {    // todo rename eg. WeatherProperties
     private String apiKey;
 }

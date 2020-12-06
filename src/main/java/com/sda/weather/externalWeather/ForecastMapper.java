@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @Component
 public class ForecastMapper {
+
     ForecastDto mapToForecastDto(Forecast newForecast){
         return ForecastDto.builder()
                 .temperature(newForecast.getTemperature())
@@ -16,9 +17,5 @@ public class ForecastMapper {
                 .windSpeed(newForecast.getWindSpeed())
                 .windDirection(newForecast.getWindDirection())
                 .build();
-    }
-    Forecast mapExternalForecastToForecast(ExternalForecastResponse response){
-        return Forecast.builder()
-                .temperature(response.getWeatherList())
     }
 }

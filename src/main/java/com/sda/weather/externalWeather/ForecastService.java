@@ -25,13 +25,12 @@ public class ForecastService {
         Localization localization = localizationFetchService.fetchLocalization(id);
         String cityName = localization.getCityName();
 
-
         String url = UriComponentsBuilder.newInstance()
                 .scheme("http")
                 .host("api.openweathermap.org/data/2.5/forecast")
                 .queryParam("q", cityName)
                 .queryParam("appid", "bb1f5dd323a8a97af4ce01cafcb5d2de")
-                .queryParam("cnt",1)
+                // .queryParam("cnt",1)    // todo remove
                 .queryParam("units", "metric")
                 .queryParam("lang", "en")
                 .build().toUriString();
@@ -41,13 +40,14 @@ public class ForecastService {
 
         try {
             ExternalForecastResponse forecast = objectMapper.readValue(response, ExternalForecastResponse.class);
-            Forecast mapperForecastFromJson = forecastMapper.mapExternalForecastToForecast(forecast);
-            return forecastRepository.save();
+
+            // todo fetch correct single forecast
+            ExternalForecastResponse.ForecastDetailsFromJson singleForecast = forecast.getWeatherList().get(0);
+            // todo map singleForecast -> Forecast
+
+            return forecastRepository.save(null);
         } catch (JsonProcessingException e) {
             throw new InternalServerException("Couldn't collect data from external service.");
         }
-
-        return ;
-
     }
 }

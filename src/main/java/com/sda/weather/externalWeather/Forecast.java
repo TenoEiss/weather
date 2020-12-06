@@ -1,5 +1,6 @@
 package com.sda.weather.externalWeather;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 @Data
 @NoArgsConstructor
 @Builder
+@AllArgsConstructor
 public class Forecast {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
