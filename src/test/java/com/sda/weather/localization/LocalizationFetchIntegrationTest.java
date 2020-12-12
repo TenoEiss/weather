@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @SpringBootTest
@@ -35,6 +36,7 @@ class LocalizationFetchIntegrationTest {
         LocalizationDto localizationDto = new LocalizationDto(null, "Gdansk", "Pomerania", "Poland", 180f, 90f);
         String requestBody = objectMapper.writeValueAsString(localizationDto);
         MockHttpServletRequestBuilder post = post("/loc")
+                .with(user("admin").roles("ADMIN"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody);
 
@@ -62,6 +64,7 @@ class LocalizationFetchIntegrationTest {
         LocalizationDto localizationDto = new LocalizationDto(null, "Gdansk", "  ", "Poland", 180f, 90f);
         String requestBody = objectMapper.writeValueAsString(localizationDto);
         MockHttpServletRequestBuilder post = post("/loc")
+                .with(user("admin").roles("ADMIN"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody);
 
@@ -89,6 +92,7 @@ class LocalizationFetchIntegrationTest {
         LocalizationDto localizationDto = new LocalizationDto(null, "Gdansk", "Pomerania", "Poland", 181f, 90f);
         String requestBody = objectMapper.writeValueAsString(localizationDto);
         MockHttpServletRequestBuilder post = post("/loc")
+                .with(user("admin").roles("ADMIN"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody);
 
@@ -108,6 +112,7 @@ class LocalizationFetchIntegrationTest {
         LocalizationDto localizationDto = new LocalizationDto(null, " ", "Pomerania", "Poland", 69f, 69f);
         String requestBody = objectMapper.writeValueAsString(localizationDto);
         MockHttpServletRequestBuilder post = post("/loc")
+                .with(user("admin").roles("ADMIN"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody);
 
