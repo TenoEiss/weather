@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import java.nio.charset.StandardCharsets;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @SpringBootTest
@@ -39,6 +40,7 @@ class LocalizationCreateIntegrationTest {
         LocalizationDto requestBody =
                 new LocalizationDto(null, "Gdansk", "Pomerania", "Poland", 69, 69);
         MockHttpServletRequestBuilder request = post("/loc")
+                .with(user("admin").roles("ADMIN"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestBody));
         //when
@@ -64,6 +66,7 @@ class LocalizationCreateIntegrationTest {
         LocalizationDto requestBody =
                 new LocalizationDto(null, "Gdansk", null, "Poland", 69, 69);
         MockHttpServletRequestBuilder request = post("/loc")
+                .with(user("admin").roles("ADMIN"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestBody));
         //when
@@ -89,6 +92,7 @@ class LocalizationCreateIntegrationTest {
         LocalizationDto requestBody =
                 new LocalizationDto(null, null, "Pomerania", "Poland", 69, 69);
         MockHttpServletRequestBuilder request = post("/loc")
+                .with(user("admin").roles("ADMIN"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestBody));
         //when
@@ -103,6 +107,7 @@ class LocalizationCreateIntegrationTest {
         LocalizationDto requestBody =
                 new LocalizationDto(null, "Gdansk", "Pomerania", null, 69, 69);
         MockHttpServletRequestBuilder request = post("/loc")
+                .with(user("admin").roles("ADMIN"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestBody));
         //when
@@ -117,6 +122,7 @@ class LocalizationCreateIntegrationTest {
         LocalizationDto requestBody =
                 new LocalizationDto(null, "Gdansk", "Pomerania", "Poland", 181, 69);
         MockHttpServletRequestBuilder request = post("/loc")
+                .with(user("admin").roles("ADMIN"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestBody));
         //when
@@ -131,6 +137,7 @@ class LocalizationCreateIntegrationTest {
         LocalizationDto requestBody =
                 new LocalizationDto(null, "Gdansk", "Pomerania", "Poland", -181, 69);
         MockHttpServletRequestBuilder request = post("/loc")
+                .with(user("admin").roles("ADMIN"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestBody));
         //when
@@ -145,6 +152,7 @@ class LocalizationCreateIntegrationTest {
         LocalizationDto requestBody =
                 new LocalizationDto(null, "Gdansk", "Pomerania", "Poland", 69, 96);
         MockHttpServletRequestBuilder request = post("/loc")
+                .with(user("admin").roles("ADMIN"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestBody));
         //when
@@ -159,6 +167,7 @@ class LocalizationCreateIntegrationTest {
         LocalizationDto requestBody =
                 new LocalizationDto(null, "Gdansk", "Pomerania", "Poland", 69, -96);
         MockHttpServletRequestBuilder request = post("/loc")
+                .with(user("admin").roles("ADMIN"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestBody));
         //when
