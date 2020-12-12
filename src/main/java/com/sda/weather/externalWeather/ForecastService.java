@@ -17,6 +17,7 @@ public class ForecastService {
 
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
+//    private final ExternalWeatherProperties externalWeatherProperties;
     private final LocalizationFetchService localizationFetchService;
     private final ForecastRepository forecastRepository;
     private final ForecastMapper forecastMapper;
@@ -30,7 +31,6 @@ public class ForecastService {
                 .host("api.openweathermap.org/data/2.5/forecast")
                 .queryParam("q", cityName)
                 .queryParam("appid", "bb1f5dd323a8a97af4ce01cafcb5d2de")
-                // .queryParam("cnt",1)    // todo remove
                 .queryParam("units", "metric")
                 .queryParam("lang", "en")
                 .build().toUriString();
@@ -39,10 +39,12 @@ public class ForecastService {
         String response = entity.getBody();
 
         try {
-            ExternalForecastResponse forecast = objectMapper.readValue(response, ExternalForecastResponse.class);
+            ExternalForecastResponse externalForecastResponse = objectMapper.readValue(response, ExternalForecastResponse.class);
+
+
 
             // todo fetch correct single forecast
-            ExternalForecastResponse.ForecastDetailsFromJson singleForecast = forecast.getWeatherList().get(0);
+            ExternalForecastResponse.ForecastDetailsFromJson singleForecast = externalForecastResponse.getWeatherList().get(0);
             // todo map singleForecast -> Forecast
 
             return forecastRepository.save(null);

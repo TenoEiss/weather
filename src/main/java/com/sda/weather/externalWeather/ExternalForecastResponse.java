@@ -15,15 +15,15 @@ public class ExternalForecastResponse {
     static class ForecastDetailsFromJson {
 
         @JsonProperty("main")
-        private WeatherDetailsFromJson weatherList;
+        private WeatherDetails weatherDetails;
 
         @JsonProperty("dt_txt")
         private String dateTime;
 
-        private WindDetailsFromJson wind;
+        private WindDetails wind;
 
         @Data
-        static class WeatherDetailsFromJson {
+        static class WeatherDetails{
             @JsonProperty("temp")
             private double temperature;
             private int pressure;
@@ -31,7 +31,7 @@ public class ExternalForecastResponse {
         }
 
         @Data
-        static class WindDetailsFromJson {
+        static class WindDetails {
             private double speed;
             private double deg;
         }
